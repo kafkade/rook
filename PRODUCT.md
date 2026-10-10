@@ -15,9 +15,9 @@ device database key. Portable backups use age passphrase encryption.
 ## Users
 
 Initially a personal iPhone app, used between sets at the gym to record
-training quickly and review progress later. Public open-source distribution
-and eventual App Store publication are intended possibilities, not completed
-milestones.
+training quickly and review progress later. Source is public and MIT-licensed
+at `kafkade/rook`. Signed app distribution and eventual App Store publication
+remain future milestones.
 
 ## Product Purpose
 
@@ -62,10 +62,11 @@ adaptive navy/slate and amber, clear completion markers, and native controls.
 
 ## Evidence on Hand
 
-`PROJECT-BRIEF.md` records decisions and their history. `AGENTS.md` defines
+`PROJECT-BRIEF.md` records approved decisions. `AGENTS.md` defines
 agent policies. Toku is architecture and workflow prior art, not an app
-dependency. No user workout dataset, screenshots, testimonials, or published
-product claims exist.
+dependency. Native simulator captures and hosted tests use isolated synthetic
+stores, not user workout data. No testimonials, independently audited security
+claims, or published App Store product exist.
 
 ## Product Principles
 

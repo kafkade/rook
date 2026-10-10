@@ -1,8 +1,29 @@
 # Local and PR validation
 
-The workflow files are prepared; hosted execution and merge protection remain
-unverified until the maintainer bootstraps the repository. Local success is
-not a claim that the GitHub-hosted runner has passed.
+The public repository and initial hosted main run are verified. PR/default-branch
+protection and the SHA-pinned Actions allowlist are active; `CI Pass` is not yet
+a required check. Documentation-only and code-affecting PR paths still need
+hosted proof before the final merge gate is enabled.
+
+## Verified bootstrap evidence
+
+The [initial CI run](https://github.com/kafkade/rook/actions/runs/38073209917)
+at commit `0c6edbe` passed all seven jobs on 2026-10-10, including `CI Pass`.
+The Apple job used ARM `macos-26`, Xcode 26.6 (17F113), and the configured
+iPhone 17 Pro / iOS 26.5 simulator. It regenerated bindings and the Xcode
+project, passed the Rust-backed Swift transport test, compiled the unsigned
+device target, and passed all five native UI tests without skips.
+
+This proves the main-push path on that runner, not every PR path or future
+runner image. Local source-only regeneration also passed on Xcode 27.
+Neither result establishes physical-device, VoiceOver, or independent security
+verification.
+
+The hosted Swift transport link reported a deployment-target mismatch: bundled
+native host objects targeted macOS 26.5 while the Swift package declared macOS
+14. The test passed on the runner, but compatibility with the declared earlier
+host floor is not established. This build issue remains open; the iPhone
+deployment floor and its separate runtime coverage are not inferred from it.
 
 ## Toolchain
 
@@ -71,9 +92,9 @@ do not establish hardware, VoiceOver, or independently audited security.
 
 ## Required check and skips
 
-`CI Pass` is the single proposed required context. Its prerequisites are
-Classify changes, Repository hygiene, Rust validation, Minimum Rust validation,
-Dependency policy, and Apple validation.
+`CI Pass` is the verified context intended for the final required gate.
+Its prerequisites are Classify changes, Repository hygiene, Rust validation,
+Minimum Rust validation, Dependency policy, and Apple validation.
 
 Every PR runs classification and hygiene. Only a diff containing exclusively
 recognized Markdown documentation paths can skip the four code checks.
@@ -115,14 +136,18 @@ separate implementation/review; no unsupported badge or assurance is implied.
 The private `github-infra` project holds `repos/rook`, initially with no required
 CI context. It manages the public repository, `main`, squash/PR protection,
 labels, dependency alerts, and SHA-pinned allowed Actions.
-No shared-module policy changes are needed.
+The bootstrap plan has been applied and its remote settings verified.
+No shared-module policy changes were needed.
 
-After actual hosted main/PR runs prove the exact `CI Pass` context, the
+The main run proved the exact `CI Pass` context. After documentation-only and
+code-affecting PR runs prove the remaining workflow paths, the
 maintainer changes Rook's `required_status_checks` to `["CI Pass"]`, reviews a
 scoped plan, and applies it. A local test is not permission to enforce an
 unproven context. Admin bypass is break-glass, not the normal contribution path.
 
 The selected provider does not expose private vulnerability reporting or
 default workflow token permissions. Those are explicit manual bootstrap
-settings, documented in the infrastructure root's README, not falsely claimed
-as managed resources.
+settings, not managed resources. The maintainer enabled private vulnerability
+reporting, read-only workflow defaults with no PR-approval permission, and
+approval for all external fork contributors. These settings were verified
+through the GitHub API, along with secret scanning and push protection.

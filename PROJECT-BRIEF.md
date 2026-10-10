@@ -57,22 +57,25 @@ moved to `rook`. Local documentation, validation, workflows, and infrastructure
 preparation are authorized; Git writes and remote operations remain gated
 maintainer actions.
 
-Target: public `kafkade/rook`, a personal-account repository. The maintainer
-creates an empty repo and makes the initial push, then imports/configures it
+Public `kafkade/rook` now exists as a personal-account repository. The maintainer
+created it, pushed initial commit `0c6edbe`, and imported/applied its settings
 through the private `github-infra/repos/rook` root.
 
 Sole-maintainer merge policy: PRs, passing CI, squash merges, zero required
 outside approvals, and emergency admin bypass. Required code PR checks include
 Rust, generated bindings, Swift transport, native UI tests, and unsigned device
 compilation; only explicitly classified documentation-only PRs may skip Apple.
-`CI Pass` must exist and pass in real hosted runs before IaC enforces it.
+PR/default-branch protection and the SHA-pinned Actions allowlist are active.
+`CI Pass` passed on the initial main run but is not required yet; documentation-only
+and code-affecting PR paths must be proved before IaC enforces it.
 
 Rust 1.91 minimum / 1.96.0 normal toolchain was explicitly approved after the
 original 1.88 declaration failed against the existing lockfile. CI uses a
-prepared stable Xcode 26.6 / iOS 26.5 ARM baseline; actual hosted proof remains
-pending. No signing secret, release workflow, infrastructure apply, Git
-repository, initial push, or published GitHub repository has been performed
-by the agent.
+stable Xcode 26.6 / iOS 26.5 ARM baseline, now verified in the initial hosted
+main run. Private reporting, read-only workflow defaults, all-external fork
+approval, secret scanning, and push protection are verified enabled.
+Git writes and remote applies were performed by the maintainer, not the agent.
+No signing secret, release workflow, or signed app distribution was added.
 
 ## Verification and open boundaries
 
@@ -82,8 +85,12 @@ are isolated from the normal store; this is not verification on physical
 hardware. A keyboard-edit invalid-frame warning remains documented.
 Local DevOps preparation also passed source-only regeneration and native
 validation, nineteen gate/tooling policy tests, workflow/shell/documentation
-lint, dependency policy, and scoped IaC validation. No hosted run or remote
-infrastructure apply has happened.
+lint, dependency policy, and scoped IaC validation. The
+[initial hosted CI run](https://github.com/kafkade/rook/actions/runs/38073209917)
+passed all seven jobs, including the Swift transport test, five native UI tests
+without skips, unsigned device compilation, and `CI Pass`. The scoped bootstrap
+apply is verified; PR-path proof, final check enforcement, and infrastructure
+version-control handoff remain outstanding.
 
 No independent security audit, physical-device/VoiceOver verification,
 production signing, app-store delivery, biometric policy, or future sync

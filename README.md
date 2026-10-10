@@ -2,9 +2,10 @@
 
 A local-first iPhone training journal. Always learning. Always your record.
 
-This is a native, encrypted **prototype**, not a published or security-audited
-product. Rook is the working name; App Store reservation, trademark clearance,
-and production signing remain undecided. Original source is MIT-licensed.
+This is a native, encrypted **prototype** with public MIT-licensed source at
+[kafkade/rook](https://github.com/kafkade/rook), not a distributed signed app or
+security-audited product. Rook is the working name; App Store reservation,
+trademark clearance, and production signing remain undecided.
 
 ## What works
 
@@ -43,10 +44,12 @@ Rest uses a persisted deadline, not continuous background execution.
 
 Requirements: Apple Silicon macOS, full Xcode with command-line tools selected,
 Python 3.12+, the pinned Rust 1.96.0 toolchain (minimum 1.91), and XcodeGen 2.45.4.
-The current Apple
-build script targets Apple Silicon; the app targets portrait iPhones on iOS
-17 or later. Local builds/tests have passed with Xcode 27. Prepared CI uses
-stable Xcode 26.6; its hosted results remain pending.
+The app targets portrait iPhones on iOS 17 or later. Local builds/tests have
+passed with Xcode 27. The
+[initial hosted CI run](https://github.com/kafkade/rook/actions/runs/38073209917)
+also passed with stable Xcode 26.6, including the Swift transport test, all five
+native UI tests, and unsigned device compilation. See `docs/ci.md` for the
+tested runtime and remaining PR-validation checkpoints.
 
 Install missing prerequisites using their normal installers/package managers:
 
@@ -131,9 +134,10 @@ do not assume Apple's storage or UI adapters will run in a browser.
 [PRODUCT.md](PRODUCT.md) records product truth, [PROJECT-BRIEF.md](PROJECT-BRIEF.md)
 preserves decisions, [DESIGN.md](DESIGN.md) records the built native design system,
 and [AGENTS.md](AGENTS.md) defines contribution constraints.
-GitHub repository creation and IaC provisioning are separate, not performed by
-the local build. The maintainer must bootstrap the repository and verify hosted
-checks before its prepared `CI Pass` merge gate is enforced.
+Repository settings are managed separately through `github-infra/repos/rook`,
+not by the local build. PR/default-branch protection and the SHA-pinned Actions
+allowlist are active. The `CI Pass` context passed on the initial main run;
+it will become required only after the remaining PR-validation checkpoints.
 
 ## Contributing and license
 

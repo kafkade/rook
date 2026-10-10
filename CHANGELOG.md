@@ -10,12 +10,15 @@
   portable backup/restore.
 - Route markers design with adaptive appearance and Dynamic Type layouts.
 - MIT licensing, contribution guidance, and reproducible local validation.
-- Prepared PR workflows for Rust, binding/native tests, dependency policy,
+- PR workflows for Rust, binding/native tests, dependency policy,
   repository hygiene, and a fail-closed aggregate check.
+- Public source repository with verified private vulnerability reporting,
+  PR/default-branch protection, and a SHA-pinned Actions allowlist.
 
 ### Known limitations
 
 - Prototype only; no independently audited security, physical-device or
   VoiceOver verification, signed distribution, Watch, HealthKit, or sync.
 - A SwiftUI invalid-frame runtime warning remains during keyboard editing.
-- Hosted CI and remote repository protection are not verified until bootstrap.
+- The initial hosted main run passed; documentation-only/code PR-path proof and
+  required `CI Pass` enforcement remain pending.

@@ -15,8 +15,9 @@ choices that materially affect scope, architecture, security, or recovery.
 - Working name: **Rook**, approved for now. Its story is that we remain
   eternal rookies: always learning and improving. Do not reopen naming unless
   requested. App Store reservation and legal clearance remain unverified.
-- The user has requested a prototype. No Git or GitHub repository has been
-  created; repository provisioning is separate from local implementation.
+- The prototype source is public at `kafkade/rook`. The maintainer performed
+  the initial commit/push and scoped infrastructure bootstrap. Git writes and
+  remote applies remain maintainer-only actions.
 - The encrypted full-loop iPhone slice is implemented. Build instructions and
   recovery boundaries are in `README.md` and `SECURITY.md`.
 - Approved visual direction: Route markers. Preserve native controls,
@@ -65,8 +66,10 @@ Local preparation is authorized after the license discussion. Repository
 creation, initial Git push, and scoped OpenTofu applies are maintainer steps;
 provide exact commands and wait for confirmation at each manual gate.
 The directory move and license discussion are complete. Rust minimum 1.91 /
-pinned 1.96.0 is approved. `docs/ci.md` describes the prepared workflows; actual
-hosted results and `CI Pass` enforcement remain manual bootstrap gates.
+pinned 1.96.0 is approved. `docs/ci.md` records the passing initial hosted
+main run on Xcode 26.6, and the verified PR/default-branch protections and
+Actions policy. PR-path validation and `CI Pass` enforcement remain manual
+bootstrap gates; do not claim the required gate is enabled yet.
 
 ## Product Constraints
 
