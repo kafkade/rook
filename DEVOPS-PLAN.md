@@ -1,7 +1,7 @@
 # Rook repository and PR validation plan
 
-Status: directory move and local preparation complete; waiting for maintainer
-review and initial Git/GitHub bootstrap. Hosted CI and remote settings unverified.
+Status: public source, initial hosted CI, and scoped infrastructure bootstrap
+verified. Preparing PR-path validation; `CI Pass` is not yet required.
 Updated 2026-10-10.
 
 The maintainer approved the staged plan and local preparation after the license
@@ -76,6 +76,18 @@ Native evidence is Xcode 27 / iPhone 18 Pro / iOS 27, not proof of the hosted
 Xcode 26.6 baseline. Scoped provider initialization, formatting, and validation
 passed; no remote plan/apply was run.
 
+Bootstrap evidence (2026-10-10): the maintainer pushed initial commit `0c6edbe`
+to public `kafkade/rook`. Its
+[first hosted run](https://github.com/kafkade/rook/actions/runs/38073209917)
+passed all seven jobs, including `CI Pass`, with Xcode 26.6 and five native
+tests without skips. Private reporting, read-only workflow defaults, all-external
+fork approval, secret scanning, and push protection are verified.
+The scoped saved plan added 15 resources and updated four without destruction;
+the maintainer applied it. Squash-only merges, active PR/default protection,
+labels, and the SHA-pinned Actions allowlist were verified afterward.
+The required status list remains empty until PR-path proof. Infrastructure
+files still require the maintainer's version-control handoff.
+
 The earlier conversation record is preserved in ignored
 `PROJECT-HISTORY.local.md`; the public `PROJECT-BRIEF.md` is a concise decision
 summary. No application data, credentials, or generated libraries belong in
@@ -87,11 +99,11 @@ the initial commit.
 | --- | --- | --- |
 | 1. Resolve license and approve plan | Completed: MIT selected, optional courtesy project link, staged plan approved. | No public source push before the actual license and publication-readiness checks are in place. |
 | 2. Move the working directory | Completed: the maintainer moved `next` to `rook`; project files are present. | Local preparation resumed from the new cwd. |
-| 3. Prepare publication-ready files | Add the selected license, contribution guide, PR/issue templates, CODEOWNERS, Unreleased changelog, dependency-update configuration, and concise architecture/CI documentation. Refresh README, SECURITY, AGENTS, and PRODUCT links. Remove machine-specific assumptions and publication-only stale claims. Keep decision history without publishing private planning notes, data, credentials, or a lengthy rejected-name narrative by accident. | Leave changes uncommitted for review. Establish exactly which source/docs/assets belong in the first commit. |
-| 4. Make local validation reproducible | Rust minimum 1.91 / pinned 1.96.0 approved after 1.88 failed. Checksum-pinned XcodeGen and validators, locked Cargo, local check entry points, and deterministic simulator selection are implemented. Static-only linking and self-contained icon provenance are preserved. | Run the checks against a clean-source staging copy or clean checkout when available. Hosted Xcode 26.6 proof still needs the first GitHub run. |
-| 5. Prepare and locally validate CI and IaC | Write the workflow jobs below, their fail-closed aggregate gate, and `github-infra/repos/rook/{main,providers,variables}.tf`. Initially leave required CI contexts empty; retain PR/branch protections when applied. Validate workflow/HCL syntax and gate behavior; initialize the scoped provider lockfile when approved. | No remote apply yet. Review the proposed diff and dependency between workflow names and IaC. Do not commit unrelated infrastructure changes. |
-| 6. Create and publish the initial repository | Supply exact maintainer commands for Git initialization, selective staging, initial commit, empty GitHub repository creation, remote setup, and initial push. Enable private reporting/read-only workflow defaults on the empty repo before the source push. Do not create remote files that produce a competing history. | Maintainer reviews, commits, creates `kafkade/rook`, configures the manual security settings, and pushes. Stop at each gate, then inspect the first workflow run. |
-| 7. Import and configure the repository | Provide scoped 1Password/OpenTofu init, import, and plan commands. Reconcile automatically existing resources before apply; check that the plan manages only Rook and contains no destruction. Configure private vulnerability reporting and repository Actions policy declaratively where the provider supports it; otherwise document a narrow manual step. | Maintainer reviews the scoped plan and applies it. Stop until confirmed. Verify actual GitHub settings and state without reading or publishing secrets. |
+| 3. Prepare publication-ready files | Completed: MIT source, contributor/PR/issue docs, changelog, dependency configuration, and public-ready decision context. | The maintainer reviewed the 66-file inventory and chose to keep all current documentation versioned. Private history/data/generated outputs were excluded. |
+| 4. Make local validation reproducible | Completed: approved Rust minimum/pin, checksum-pinned tools, locked Cargo, exact simulator selection, and self-contained icon provenance. | Source-only checks passed locally; initial hosted Xcode 26.6/native validation also passed. |
+| 5. Prepare and locally validate CI and IaC | Completed: fail-closed aggregate workflow, policy tests, scoped Rook root, and provider lockfile validated. | Required contexts were left empty for bootstrap. No shared-module policy change. |
+| 6. Create and publish the initial repository | Completed by the maintainer: initial commit, empty public repo, manual security settings, and initial push. | Remote `main` matches `0c6edbe`; all seven initial hosted jobs passed. |
+| 7. Import and configure the repository | Completed by the maintainer: three direct imports, scoped discovery/import completion, reviewed saved plan, and apply. | Actual GitHub settings are verified; no required CI context yet. Infrastructure changes still need version-control handoff. |
 | 8. Prove the PR pipeline | The maintainer opens a small validation PR. Observe actual check names, runner/tool versions, forks' read-only behavior, documentation-only classification, and code-triggered Apple tests. Fix real failures in files; the maintainer commits/pushes fixes. Explicitly test that failures, cancellations, failed classification, and unexpected skipped prerequisites cannot yield a passing aggregate. | Wait after every required commit/push. Do not enable a required check while its workflow is unproven. |
 | 9. Enforce the final merge gate | Set `required_status_checks = ["CI Pass"]` once that context exists and passes. Confirm `main` is the actual default branch. Plan/apply only Rook; bind the expected check producer where supported. | Maintainer reviews/applies; stop until confirmed. Verify that a PR is blocked on failed/pending CI and succeeds only after its required checks. |
 | 10. Close the bootstrap | Finish remaining reviewed PRs in Rook and `github-infra`, reconcile docs/status, and verify the final scoped plan is clean. Record the runner baseline, required context, known limitations, and recovery instructions for local state. | Maintainer merges infrastructure/code PRs. Completion means the remote settings, recorded IaC, and actual PR runs agree. |

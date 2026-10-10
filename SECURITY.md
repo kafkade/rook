@@ -102,12 +102,14 @@ verification: those behaviors still need hardware testing, alongside
 Keychain-loss recovery, VoiceOver, interruption/power-loss testing, and an
 independent security assessment.
 
-The repository bootstrap and private reporting endpoint are not yet verified.
-Once enabled, use the repository's Security tab to report privately; do not
-assume this channel is operational until confirmed. Do not put personal
-workout data, keys, passphrases, or exploit details in public issues.
+Private vulnerability reporting is enabled and was verified on 2026-10-10.
+Use [Rook's private reporting form](https://github.com/kafkade/rook/security/advisories/new)
+to report vulnerabilities; do not open a public issue with exploit details.
+Never include personal workout data, keys, or passphrases in a report.
 
-Prepared PR validation uses read-only tokens and no signing secrets. Dependency
-advisory/license checks are not an independent security audit or comprehensive
+Workflows use read-only tokens and no signing secrets. The repository requires
+approval for all external fork contributors and SHA-pinned allowlisted Actions;
+secret scanning and push protection were also verified enabled.
+Dependency advisory/license checks are not an independent security audit or comprehensive
 source-level scan. Test artifacts contain isolated synthetic records only.
 See `docs/ci.md` for runner, reporting, and validation boundaries.

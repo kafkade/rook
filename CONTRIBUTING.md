@@ -57,8 +57,8 @@ Feature requests should explain the user's task without turning future Watch,
 HealthKit, runs, or web possibilities into current capabilities.
 
 Do not publish vulnerability details in an issue. Follow
-[SECURITY.md](SECURITY.md). Private GitHub reporting must be verified enabled
-before that channel is advertised as operational.
+[SECURITY.md](SECURITY.md). Private GitHub reporting is enabled for Rook;
+use that channel instead of a public vulnerability issue.
 
 ## License and attribution
 
