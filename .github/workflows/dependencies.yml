@@ -1,0 +1,29 @@
+name: Dependency monitoring
+
+on:
+  schedule:
+    - cron: "17 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependency-monitoring
+  cancel-in-progress: false
+
+jobs:
+  dependencies:
+    name: Scheduled dependency policy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: rustup show
+      - name: Install pinned dependency checker
+        run: |
+          VERSION="$(python3 -c 'import json; print(json.load(open("scripts/tool-versions.json"))["cargo_deny"])')"
+          cargo install cargo-deny --version "$VERSION" --locked
+      - run: cargo deny check

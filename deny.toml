@@ -1,0 +1,51 @@
+[graph]
+all-features = true
+
+[advisories]
+db-urls = ["https://github.com/RustSec/advisory-db"]
+yanked = "deny"
+
+[licenses]
+confidence-threshold = 0.93
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "Unicode-3.0",
+]
+
+# UniFFI's existing, unmodified dependencies retain their file-level MPL license.
+[[licenses.exceptions]]
+name = "uniffi"
+allow = ["MPL-2.0"]
+[[licenses.exceptions]]
+name = "uniffi_bindgen"
+allow = ["MPL-2.0"]
+[[licenses.exceptions]]
+name = "uniffi_core"
+allow = ["MPL-2.0"]
+[[licenses.exceptions]]
+name = "uniffi_internal_macros"
+allow = ["MPL-2.0"]
+[[licenses.exceptions]]
+name = "uniffi_macros"
+allow = ["MPL-2.0"]
+[[licenses.exceptions]]
+name = "uniffi_meta"
+allow = ["MPL-2.0"]
+[[licenses.exceptions]]
+name = "uniffi_pipeline"
+allow = ["MPL-2.0"]
+[[licenses.exceptions]]
+name = "uniffi_udl"
+allow = ["MPL-2.0"]
+
+[bans]
+multiple-versions = "allow"
+wildcards = "deny"
+allow-wildcard-paths = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

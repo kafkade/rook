@@ -1,0 +1,148 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  classify:
+    name: Classify changes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      code: ${{ steps.classify.outputs.code }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: classify
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 scripts/ci-policy.py classify
+
+  hygiene:
+    name: Repository hygiene
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check PR title
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: python3 scripts/ci-policy.py title
+      - name: Reject tracked data and build artifacts
+        run: python3 scripts/ci-policy.py files
+      - name: Install checksum-pinned validators
+        run: python3 scripts/install-tools.py actionlint shellcheck
+      - run: npm ci --ignore-scripts --no-fund --no-audit
+      - run: bash scripts/check-repository.sh
+
+  rust:
+    name: Rust validation
+    needs: classify
+    if: needs.classify.outputs.code == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: rustup show
+      - run: bash scripts/check-rust.sh
+
+  msrv:
+    name: Minimum Rust validation
+    needs: classify
+    if: needs.classify.outputs.code == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check the declared minimum including binding generation
+        run: |
+          MINIMUM="$(python3 -c 'import tomllib; print(tomllib.load(open("Cargo.toml", "rb"))["workspace"]["package"]["rust-version"])')"
+          rustup toolchain install "$MINIMUM" --profile minimal
+          cargo +"$MINIMUM" check --workspace --all-targets --all-features --locked
+
+  dependencies:
+    name: Dependency policy
+    needs: classify
+    if: needs.classify.outputs.code == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: rustup show
+      - name: Install pinned dependency checker
+        run: |
+          VERSION="$(python3 -c 'import json; print(json.load(open("scripts/tool-versions.json"))["cargo_deny"])')"
+          cargo install cargo-deny --version "$VERSION" --locked
+      - run: cargo deny check
+
+  apple:
+    name: Apple validation
+    needs: classify
+    if: needs.classify.outputs.code == 'true'
+    runs-on: macos-26
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Show selected SDK and compiler
+        run: |
+          xcodebuild -version
+          rustup show
+          xcrun simctl list runtimes
+      - name: Install checksum-pinned XcodeGen
+        run: python3 scripts/install-tools.py xcodegen
+      - run: bash scripts/check-apple.sh
+      - name: Upload synthetic native test results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rook-native-tests
+          path: target/ci-results/*.xcresult
+          if-no-files-found: warn
+          retention-days: 7
+
+  ci-pass:
+    name: CI Pass
+    if: always()
+    needs: [classify, hygiene, rust, msrv, dependencies, apple]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - env:
+          NEEDS_JSON: ${{ toJSON(needs) }}
+        run: python3 scripts/ci-policy.py gate

@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-10T02:28:51.224Z",
+  "title": "Design System: Rook",
+  "extensions": {
+    "colorMeta": {
+      "accent-light": { "role": "primary", "displayName": "Amber interaction · light" },
+      "accent-dark": { "role": "primary", "displayName": "Amber interaction · dark" },
+      "on-accent-light": { "role": "neutral", "displayName": "On amber · light" },
+      "on-accent-dark": { "role": "neutral", "displayName": "On amber · dark" },
+      "canvas-light": { "role": "neutral", "displayName": "Navy/slate canvas · light" },
+      "canvas-dark": { "role": "neutral", "displayName": "Navy/slate canvas · dark" },
+      "surface-light": { "role": "neutral", "displayName": "Raised list surface · light" },
+      "surface-dark": { "role": "neutral", "displayName": "Raised list surface · dark" },
+      "secondary-light": { "role": "neutral", "displayName": "Secondary slate text · light" },
+      "secondary-dark": { "role": "neutral", "displayName": "Secondary slate text · dark" },
+      "track-light": { "role": "neutral", "displayName": "Incomplete track · light" },
+      "track-dark": { "role": "neutral", "displayName": "Incomplete track · dark" }
+    },
+    "typographyMeta": {
+      "title": { "displayName": "Native Title · bold", "purpose": "SwiftUI title for the active routine, rest clock, and privacy title; size follows Dynamic Type." },
+      "title2": { "displayName": "Native Title 2 · bold", "purpose": "Routine empty-state invitation; size follows Dynamic Type." },
+      "title3": { "displayName": "Native Title 3 · bold", "purpose": "Routine names; size follows Dynamic Type." },
+      "headline": { "displayName": "Native Headline", "purpose": "Exercise headings, accessibility set labels, resume labels, and history names." },
+      "body": { "displayName": "Native Body", "purpose": "System SF body text, not a fixed app font size." },
+      "subheadline": { "displayName": "Native Subheadline", "purpose": "Elapsed/count metadata and history summaries." },
+      "caption": { "displayName": "Native Caption", "purpose": "Compact column labels and previous-set values." },
+      "footnote": { "displayName": "Native Footnote", "purpose": "Quieter routine, history, and settings explanations." },
+      "numeric": { "displayName": "Tabular SF overlay", "purpose": "The monospacedDigit feature applied to the relevant native text style; not a separate font." }
+    }
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary-light",
+      "description": "Panel-only light/dark illustrative adapter for rookPrimary() in apple/Rook/Theme.swift and Start workout in apple/Rook/RookApp.swift. Accent/on-accent values are literal native-theme mappings; browser button geometry is not shipped SwiftUI geometry or simulator evidence.",
+      "html": "<div class=\"ds-primary-demo\"><section class=\"ds-primary-light\" aria-label=\"Light appearance\"><button type=\"button\" class=\"ds-primary-button\">Start workout</button></section><section class=\"ds-primary-dark\" aria-label=\"Dark appearance\"><button type=\"button\" class=\"ds-primary-button\">Start workout</button></section></div>",
+      "css": ".ds-primary-demo{display:flex;flex-direction:column;gap:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}.ds-primary-light{color-scheme:light;background:rgb(93% 95% 97%);padding:12px}.ds-primary-dark{color-scheme:dark;background:rgb(6.3% 11.4% 18.8%);padding:12px}.ds-primary-button{font:inherit;width:100%;appearance:auto}.ds-primary-light .ds-primary-button{background:rgb(45% 29% 7%);color:rgb(100% 100% 100%);border-color:rgb(45% 29% 7%)}.ds-primary-dark .ds-primary-button{background:rgb(100% 83.5% 51%);color:rgb(6.3% 11.4% 18.8%);border-color:rgb(100% 83.5% 51%)}"
+    },
+    {
+      "name": "Bordered action",
+      "kind": "button",
+      "refersTo": "action-bordered-light",
+      "description": "Panel-only light/dark illustrative adapter for native bordered +30 sec and Skip actions in apple/Rook/WorkoutView.swift. Uses the source minimum target height and adaptive tint; adapter borders do not specify SwiftUI's system-managed bordered fill, radius, or states. Not shipped web UI or simulator evidence.",
+      "html": "<div class=\"ds-bordered-demo\"><section class=\"ds-bordered-light\" aria-label=\"Light rest actions\"><button type=\"button\" class=\"ds-bordered-button\">+30 sec</button><button type=\"button\" class=\"ds-bordered-button\">Skip</button></section><section class=\"ds-bordered-dark\" aria-label=\"Dark rest actions\"><button type=\"button\" class=\"ds-bordered-button\">+30 sec</button><button type=\"button\" class=\"ds-bordered-button\">Skip</button></section></div>",
+      "css": ".ds-bordered-demo{display:flex;flex-direction:column;gap:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}.ds-bordered-light,.ds-bordered-dark{display:flex;flex-wrap:wrap;gap:8px;padding:12px}.ds-bordered-light{color-scheme:light;background:rgb(100% 100% 100%);color:rgb(45% 29% 7%)}.ds-bordered-dark{color-scheme:dark;background:rgb(9.8% 16.1% 25.1%);color:rgb(100% 83.5% 51%)}.ds-bordered-button{font:inherit;appearance:auto;background:transparent;color:inherit;border-color:currentColor;min-height:44px;min-width:44px}"
+    },
+    {
+      "name": "Numeric field",
+      "kind": "input",
+      "refersTo": "numeric-field",
+      "description": "Panel-only light/dark illustrative adapter for labeled, centered rounded-border workout fields in apple/Rook/WorkoutView.swift. Empty fields intentionally avoid fabricated records. CSS pixels adapt the native minimum target; browser Field/CanvasText retain semantic foregrounds. Not native keyboard behavior, shipped web UI, or simulator evidence.",
+      "html": "<div class=\"ds-numeric-demo\"><section class=\"ds-numeric-light\" aria-label=\"Light weight input\"><label class=\"ds-numeric-label\">Weight (kg)<input class=\"ds-numeric-input\" type=\"text\" inputmode=\"decimal\" placeholder=\"kg\" aria-label=\"Weight in kilograms, illustrative set\"></label></section><section class=\"ds-numeric-dark\" aria-label=\"Dark repetitions input\"><label class=\"ds-numeric-label\">Reps<input class=\"ds-numeric-input\" type=\"text\" inputmode=\"numeric\" placeholder=\"Reps\" aria-label=\"Repetitions, illustrative set\"></label></section></div>",
+      "css": ".ds-numeric-demo{display:flex;flex-direction:column;gap:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}.ds-numeric-light,.ds-numeric-dark{padding:12px;color:CanvasText}.ds-numeric-light{color-scheme:light;background:rgb(100% 100% 100%)}.ds-numeric-dark{color-scheme:dark;background:rgb(9.8% 16.1% 25.1%)}.ds-numeric-label{display:flex;flex-direction:column;gap:12px}.ds-numeric-input{font:inherit;font-variant-numeric:tabular-nums;text-align:center;min-height:44px;min-width:44px;background:Field;color:FieldText;appearance:auto}"
+    },
+    {
+      "name": "Native navigation",
+      "kind": "nav",
+      "description": "Panel-only text-only light/dark adapter for the four native TabView destinations in apple/Rook/RookApp.swift. Browser buttons illustrate destination hierarchy and tint, not native tab-bar geometry, SF Symbols, navigation motion, or a functional tab implementation. Not shipped web UI or simulator evidence.",
+      "html": "<div class=\"ds-navigation-demo\"><nav class=\"ds-navigation-light\" aria-label=\"Light native destinations\"><div class=\"ds-navigation-tabs\" role=\"tablist\" aria-label=\"Illustrative destinations\"><button class=\"ds-navigation-tab ds-navigation-selected\" type=\"button\" role=\"tab\" aria-selected=\"true\">Routines</button><button class=\"ds-navigation-tab\" type=\"button\" role=\"tab\" aria-selected=\"false\">History</button><button class=\"ds-navigation-tab\" type=\"button\" role=\"tab\" aria-selected=\"false\">Progress</button><button class=\"ds-navigation-tab\" type=\"button\" role=\"tab\" aria-selected=\"false\">Settings</button></div></nav><nav class=\"ds-navigation-dark\" aria-label=\"Dark native destinations\"><div class=\"ds-navigation-tabs\" role=\"tablist\" aria-label=\"Illustrative destinations\"><button class=\"ds-navigation-tab ds-navigation-selected\" type=\"button\" role=\"tab\" aria-selected=\"true\">Routines</button><button class=\"ds-navigation-tab\" type=\"button\" role=\"tab\" aria-selected=\"false\">History</button><button class=\"ds-navigation-tab\" type=\"button\" role=\"tab\" aria-selected=\"false\">Progress</button><button class=\"ds-navigation-tab\" type=\"button\" role=\"tab\" aria-selected=\"false\">Settings</button></div></nav></div>",
+      "css": ".ds-navigation-demo{display:flex;flex-direction:column;gap:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}.ds-navigation-light,.ds-navigation-dark{padding:12px}.ds-navigation-light{color-scheme:light;background:rgb(100% 100% 100%);color:rgb(31% 38% 47%)}.ds-navigation-dark{color-scheme:dark;background:rgb(9.8% 16.1% 25.1%);color:rgb(70% 77% 85%)}.ds-navigation-tabs{display:flex;flex-wrap:wrap;gap:8px}.ds-navigation-tab{font:inherit;appearance:auto;background:transparent;color:inherit}.ds-navigation-light .ds-navigation-selected{color:rgb(45% 29% 7%)}.ds-navigation-dark .ds-navigation-selected{color:rgb(100% 83.5% 51%)}"
+    },
+    {
+      "name": "Route progress and completion",
+      "kind": "custom",
+      "refersTo": "completion-marker-light",
+      "description": "Panel-only light/dark illustrative adapter for per-exercise ProgressView and incomplete/completed controls in apple/Rook/WorkoutView.swift. Demonstration states are not workout history. Inline geometric vectors stand in for SF Symbols; browser progress geometry remains browser-managed. Not shipped web UI, native state transitions, or simulator evidence.",
+      "html": "<div class=\"ds-route-demo\"><section class=\"ds-route-light\" aria-label=\"Light illustrative completion states\"><div class=\"ds-route-progress\"><progress class=\"ds-route-meter\" value=\"1\" max=\"2\" aria-label=\"Illustrative exercise: one of two sets complete\"></progress><progress class=\"ds-route-meter\" value=\"0\" max=\"2\" aria-label=\"Illustrative exercise: zero of two sets complete\"></progress></div><div class=\"ds-route-states\"><button type=\"button\" class=\"ds-route-button ds-route-incomplete\" aria-label=\"Illustrative incomplete set\"><svg class=\"ds-route-symbol\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"></circle></svg></button><button type=\"button\" class=\"ds-route-button ds-route-complete\" aria-label=\"Illustrative completed set\"><svg class=\"ds-route-symbol\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><polyline points=\"5,12 10,17 19,7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"></polyline></svg></button></div><p class=\"ds-route-footer\">Complete a set to start rest.</p></section><section class=\"ds-route-dark\" aria-label=\"Dark illustrative completion states\"><div class=\"ds-route-progress\"><progress class=\"ds-route-meter\" value=\"1\" max=\"2\" aria-label=\"Illustrative exercise: one of two sets complete\"></progress><progress class=\"ds-route-meter\" value=\"0\" max=\"2\" aria-label=\"Illustrative exercise: zero of two sets complete\"></progress></div><div class=\"ds-route-states\"><button type=\"button\" class=\"ds-route-button ds-route-incomplete\" aria-label=\"Illustrative incomplete set\"><svg class=\"ds-route-symbol\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"></circle></svg></button><button type=\"button\" class=\"ds-route-button ds-route-complete\" aria-label=\"Illustrative completed set\"><svg class=\"ds-route-symbol\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><polyline points=\"5,12 10,17 19,7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"></polyline></svg></button></div><p class=\"ds-route-footer\">Complete a set to start rest.</p></section></div>",
+      "css": ".ds-route-demo{display:flex;flex-direction:column;gap:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}.ds-route-light,.ds-route-dark{padding:12px;display:flex;flex-direction:column;gap:12px}.ds-route-light{color-scheme:light;background:rgb(100% 100% 100%);color:CanvasText}.ds-route-dark{color-scheme:dark;background:rgb(9.8% 16.1% 25.1%);color:CanvasText}.ds-route-progress{display:flex;gap:6px}.ds-route-meter{flex:1;min-width:0}.ds-route-light .ds-route-meter{accent-color:rgb(45% 29% 7%)}.ds-route-dark .ds-route-meter{accent-color:rgb(100% 83.5% 51%)}.ds-route-states{display:flex;gap:8px}.ds-route-button{font:inherit;appearance:auto;min-width:44px;min-height:44px}.ds-route-symbol{width:24px;min-height:28px;vertical-align:middle}.ds-route-light .ds-route-incomplete{background:rgb(76% 81% 87%);border-color:rgb(76% 81% 87%);color:CanvasText}.ds-route-dark .ds-route-incomplete{background:rgb(21% 28% 37%);border-color:rgb(21% 28% 37%);color:CanvasText}.ds-route-light .ds-route-complete{background:rgb(45% 29% 7%);border-color:rgb(45% 29% 7%);color:rgb(100% 100% 100%)}.ds-route-dark .ds-route-complete{background:rgb(100% 83.5% 51%);border-color:rgb(100% 83.5% 51%);color:rgb(6.3% 11.4% 18.8%)}.ds-route-footer{margin:0}.ds-route-light .ds-route-footer{color:rgb(31% 38% 47%)}.ds-route-dark .ds-route-footer{color:rgb(70% 77% 85%)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Route markers",
+    "overview": "Rook is a native iPhone Operate interface for recording sets between efforts. Route markers makes completed work and the next editable set easy to find through adaptive navy/slate surfaces, warm amber interaction tint, and clear completion marks.\n\nNative SF typography, Dynamic Type, lists, controls, and navigation carry the interface. Brand expression stays in adaptive roles and meaningful markers; decorative motivation, rings, and dense dashboard chrome do not belong in the active-workout surface.",
+    "keyCharacteristics": [
+      "Adaptive navy/slate surfaces with amber interaction tint.",
+      "System SF text styles, tabular training values, and generous touch targets.",
+      "Native list hierarchy and explicit incomplete/completed set markers."
+    ],
+    "rules": [
+      {
+        "name": "The Native Foreground Rule",
+        "body": "Keep primary text system-managed and pair each adaptive accent with its matching on-accent foreground.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dynamic Type Rule",
+        "body": "Use semantic SwiftUI text styles and let Dynamic Type change both text and layout instead of freezing a point-size scale.",
+        "section": "typography"
+      },
+      {
+        "name": "The Platform Depth Rule",
+        "body": "Let native grouping and presentation establish depth instead of adding custom shadows or web-style glass.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve Route markers, adaptive navy/slate surfaces, amber interaction tint, and explicit completion states.",
+      "Do keep system primary text, SF text styles, Dynamic Type, and native control geometry.",
+      "Do preserve explicit minimum 44 pt workout targets and accessibility-size vertical set rows.",
+      "Do retain the explicit secondary-text role on the active-workout exercise footer.",
+      "Do use stored completed sets for previous values, history, and separate Progress.",
+      "Do keep native navigation, presentation motion, and destructive confirmations."
+    ],
+    "donts": [
+      "Don't introduce a new metaphor, decorative rings, or dense dashboard chrome into the active-workout surface.",
+      "Don't turn system controls into fixed-size web components or invent app radii, shadows, breakpoints, or hover behavior.",
+      "Don't add the deferred inline workout chart or fabricate previous values or workout history.",
+      "Don't treat illustrative panel previews as shipped UI or simulator evidence.",
+      "Don't extend the footer-only ship disposition into security, hardware, or VoiceOver assurance, trademark clearance, or delivered HealthKit/Watch support."
+    ]
+  }
+}

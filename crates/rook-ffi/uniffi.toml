@@ -1,0 +1,4 @@
+[bindings.swift]
+module_name = "RookKit"
+ffi_module_name = "RookFFI"
+generate_module_map = true

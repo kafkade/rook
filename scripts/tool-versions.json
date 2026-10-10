@@ -1,0 +1,48 @@
+{
+  "xcode": "26.6",
+  "simulator_name": "iPhone 17 Pro",
+  "simulator_runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+  "cargo_deny": "0.19.9",
+  "tools": {
+    "actionlint": {
+      "version": "1.7.12",
+      "assets": {
+        "Darwin-arm64": {
+          "url": "https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_darwin_arm64.tar.gz",
+          "sha256": "aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f",
+          "executable": "actionlint"
+        },
+        "Linux-x86_64": {
+          "url": "https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz",
+          "sha256": "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8",
+          "executable": "actionlint"
+        }
+      }
+    },
+    "shellcheck": {
+      "version": "0.11.0",
+      "assets": {
+        "Darwin-arm64": {
+          "url": "https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.darwin.aarch64.tar.gz",
+          "sha256": "339b930feb1ea764467013cc1f72d09cd6b869ebf1013296ba9055ab2ffbd26f",
+          "executable": "shellcheck-v0.11.0/shellcheck"
+        },
+        "Linux-x86_64": {
+          "url": "https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.linux.x86_64.tar.gz",
+          "sha256": "b7af85e41cc99489dcc21d66c6d5f3685138f06d34651e6d34b42ec6d54fe6f6",
+          "executable": "shellcheck-v0.11.0/shellcheck"
+        }
+      }
+    },
+    "xcodegen": {
+      "version": "2.45.4",
+      "assets": {
+        "Darwin-arm64": {
+          "url": "https://github.com/yonaskolb/XcodeGen/releases/download/2.45.4/xcodegen.zip",
+          "sha256": "090ec29491aad50aec10631bf6e62253fed733c50f3aab0f5ffc86bc170bdbef",
+          "executable": "xcodegen/bin/xcodegen"
+        }
+      }
+    }
+  }
+}
