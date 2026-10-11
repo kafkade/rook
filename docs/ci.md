@@ -2,8 +2,8 @@
 
 The public repository and initial hosted main run are verified. PR/default-branch
 protection and the SHA-pinned Actions allowlist are active; `CI Pass` is not yet
-a required check. Documentation-only and code-affecting PR paths still need
-hosted proof before the final merge gate is enabled.
+a required check. The documentation-only PR path is verified; the code-affecting
+PR path still needs hosted proof before the final merge gate is enabled.
 
 ## Verified bootstrap evidence
 
@@ -19,11 +19,22 @@ runner image. Local source-only regeneration also passed on Xcode 27.
 Neither result establishes physical-device, VoiceOver, or independent security
 verification.
 
-The hosted Swift transport link reported a deployment-target mismatch: bundled
-native host objects targeted macOS 26.5 while the Swift package declared macOS
-14. The test passed on the runner, but compatibility with the declared earlier
-host floor is not established. This build issue remains open; the iPhone
-deployment floor and its separate runtime coverage are not inferred from it.
+The initial hosted Swift transport link reported a deployment-target mismatch:
+bundled native host objects targeted macOS 26.5 while the Swift package declared
+macOS 14. `build-apple.sh` now explicitly exports
+`MACOSX_DEPLOYMENT_TARGET=14.0` for the host Rust and bundled SQLCipher/OpenSSL
+builds. It keeps the separate iPhone target at iOS 17.0.
+
+`check-apple.sh` inspects every reported deployment record in the staged host
+archive and the binding-generation dylib before linking the Swift test. Missing
+or invalid metadata, non-macOS platforms, or any minimum above macOS 14 fail the
+check instead of being accepted as a linker warning. This verifies compiled
+deployment metadata, not execution on macOS 14 hardware or the iOS 17 runtime.
+
+[Documentation PR #1](https://github.com/kafkade/rook/pull/1) passed with
+`code=false`, successful hygiene, four intentional code-job skips, and a
+successful aggregate. It was squash-merged as `d7bb1ac`; the full code PR and
+required gate enforcement remain pending.
 
 ## Toolchain
 
@@ -69,7 +80,8 @@ bash scripts/build-apple.sh simulator
 
 `check-apple.sh` regenerates bindings/project/icon, runs the host Swift
 transport test, compiles the unsigned iPhone target, and runs the entire native
-UI suite. It selects exactly one available simulator before doing the work.
+UI suite. It also checks the host archive/dylib deployment metadata against
+RookKit's macOS 14 floor. It selects exactly one available simulator before doing the work.
 `SIMULATOR_NAME` and `SIMULATOR_RUNTIME` may select an exact local pair, or
 `SIMULATOR_UDID` may select an already available iPhone on another runtime.
 CI still asserts its pinned Xcode version.

@@ -9,6 +9,8 @@ case "$MODE" in
 esac
 
 cd "$ROOT"
+# Match RookKit's host-test floor for Rust and bundled SQLCipher/OpenSSL objects.
+export MACOSX_DEPLOYMENT_TARGET=14.0
 export IPHONEOS_DEPLOYMENT_TARGET=17.0
 if [[ "$(uname -s)" != Darwin || "$(uname -m)" != arm64 ]]; then
   printf 'Rook Apple builds currently require Apple Silicon macOS.\n' >&2
