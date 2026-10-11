@@ -1,7 +1,8 @@
 # Rook repository and PR validation plan
 
 Status: public source, initial hosted CI, and scoped infrastructure bootstrap
-verified. Preparing PR-path validation; `CI Pass` is not yet required.
+verified, along with documentation/code PR validation and required `CI Pass`
+configuration. Final negative/recovery proof and infrastructure PR merge pending.
 Updated 2026-10-10.
 
 The maintainer approved the staged plan and local preparation after the license
@@ -85,8 +86,17 @@ fork approval, secret scanning, and push protection are verified.
 The scoped saved plan added 15 resources and updated four without destruction;
 the maintainer applied it. Squash-only merges, active PR/default protection,
 labels, and the SHA-pinned Actions allowlist were verified afterward.
-The required status list remains empty until PR-path proof. Infrastructure
-files still require the maintainer's version-control handoff.
+The required status list was initially empty until PR-path proof.
+
+Documentation PR #1 passed run `38091984030` with four explicit code-job skips
+and merged as `d7bb1ac`. Code PR #2 passed all seven jobs in run `38108441675`
+and merged as `17b6768`; the host deployment-target mismatch was fixed and
+verified on Xcode 26.6. The infrastructure definition is committed at
+`2fd730e` in private `github-infra` PR #2, awaiting merge.
+The maintainer reviewed/applied a saved plan containing exactly one ruleset
+update. `CI Pass` and strict up-to-date checks are active in both the ruleset
+and effective `main` rules. The final failed-prerequisite/recovery proof remains
+pending; no failed checks may be merged through admin bypass.
 
 The earlier conversation record is preserved in ignored
 `PROJECT-HISTORY.local.md`; the public `PROJECT-BRIEF.md` is a concise decision
@@ -102,10 +112,10 @@ the initial commit.
 | 3. Prepare publication-ready files | Completed: MIT source, contributor/PR/issue docs, changelog, dependency configuration, and public-ready decision context. | The maintainer reviewed the 66-file inventory and chose to keep all current documentation versioned. Private history/data/generated outputs were excluded. |
 | 4. Make local validation reproducible | Completed: approved Rust minimum/pin, checksum-pinned tools, locked Cargo, exact simulator selection, and self-contained icon provenance. | Source-only checks passed locally; initial hosted Xcode 26.6/native validation also passed. |
 | 5. Prepare and locally validate CI and IaC | Completed: fail-closed aggregate workflow, policy tests, scoped Rook root, and provider lockfile validated. | Required contexts were left empty for bootstrap. No shared-module policy change. |
-| 6. Create and publish the initial repository | Completed by the maintainer: initial commit, empty public repo, manual security settings, and initial push. | Remote `main` matches `0c6edbe`; all seven initial hosted jobs passed. |
-| 7. Import and configure the repository | Completed by the maintainer: three direct imports, scoped discovery/import completion, reviewed saved plan, and apply. | Actual GitHub settings are verified; no required CI context yet. Infrastructure changes still need version-control handoff. |
-| 8. Prove the PR pipeline | The maintainer opens a small validation PR. Observe actual check names, runner/tool versions, forks' read-only behavior, documentation-only classification, and code-triggered Apple tests. Fix real failures in files; the maintainer commits/pushes fixes. Explicitly test that failures, cancellations, failed classification, and unexpected skipped prerequisites cannot yield a passing aggregate. | Wait after every required commit/push. Do not enable a required check while its workflow is unproven. |
-| 9. Enforce the final merge gate | Set `required_status_checks = ["CI Pass"]` once that context exists and passes. Confirm `main` is the actual default branch. Plan/apply only Rook; bind the expected check producer where supported. | Maintainer reviews/applies; stop until confirmed. Verify that a PR is blocked on failed/pending CI and succeeds only after its required checks. |
+| 6. Create and publish the initial repository | Completed by the maintainer: initial commit, empty public repo, manual security settings, and initial push. | Initial `0c6edbe` passed; subsequent PRs merged and local/remote main synchronized. |
+| 7. Import and configure the repository | Completed by the maintainer: three direct imports, scoped discovery/import completion, reviewed saved plan, and apply. | Remote settings verified. Infrastructure source committed in private PR #2; merge remains outstanding. |
+| 8. Prove the PR pipeline | Main, documentation-only PR #1, and full code PR #2 passed. Local tests cover failed/cancelled/skipped prerequisites and invalid classification. | Hosted failing-prerequisite/recovery proof still pending. Do not portray unit coverage as independent hosted failure/cancellation tests. |
+| 9. Enforce the final merge gate | Completed scoped saved-plan apply: `CI Pass` required with strict up-to-date checks; effective main rules verified. Shared module has no producer-binding input. | Demonstrate failed then passing PR checks without admin bypass; the configured rule alone is not end-to-end proof. |
 | 10. Close the bootstrap | Finish remaining reviewed PRs in Rook and `github-infra`, reconcile docs/status, and verify the final scoped plan is clean. Record the runner baseline, required context, known limitations, and recovery instructions for local state. | Maintainer merges infrastructure/code PRs. Completion means the remote settings, recorded IaC, and actual PR runs agree. |
 
 Step 7 may be performed before the validation PR so PR/branch protections are

@@ -136,8 +136,10 @@ preserves decisions, [DESIGN.md](DESIGN.md) records the built native design syst
 and [AGENTS.md](AGENTS.md) defines contribution constraints.
 Repository settings are managed separately through `github-infra/repos/rook`,
 not by the local build. PR/default-branch protection and the SHA-pinned Actions
-allowlist are active. The `CI Pass` context passed on the initial main run;
-it will become required only after the remaining PR-validation checkpoints.
+allowlist are active. Main, documentation-only, and code-affecting workflows
+passed; `CI Pass` is now required on `main` with strict up-to-date checks.
+Final failed-prerequisite/recovery proof and the infrastructure PR merge remain
+pending. Admin bypass is emergency-only.
 
 ## Contributing and license
 

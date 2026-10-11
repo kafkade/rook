@@ -14,6 +14,8 @@
   repository hygiene, and a fail-closed aggregate check.
 - Public source repository with verified private vulnerability reporting,
   PR/default-branch protection, and a SHA-pinned Actions allowlist.
+- Required `CI Pass` merge check with strict up-to-date policy, enabled after
+  successful main and documentation/code PR validation.
 
 ### Fixed
 
@@ -25,5 +27,6 @@
 - Prototype only; no independently audited security, physical-device or
   VoiceOver verification, signed distribution, Watch, HealthKit, or sync.
 - A SwiftUI invalid-frame runtime warning remains during keyboard editing.
-- The initial hosted main run and documentation-only PR passed; code-affecting
-  PR-path proof and required `CI Pass` enforcement remain pending.
+- Main and documentation/code PR validation passed and `CI Pass` is required;
+  the final failed-prerequisite/recovery proof and infrastructure merge remain
+  pending.

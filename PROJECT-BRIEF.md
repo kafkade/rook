@@ -66,8 +66,11 @@ outside approvals, and emergency admin bypass. Required code PR checks include
 Rust, generated bindings, Swift transport, native UI tests, and unsigned device
 compilation; only explicitly classified documentation-only PRs may skip Apple.
 PR/default-branch protection and the SHA-pinned Actions allowlist are active.
-`CI Pass` passed on the initial main run but is not required yet; documentation-only
-and code-affecting PR paths must be proved before IaC enforces it.
+Main, documentation-only PR #1, and code PR #2 all passed. The maintainer
+reviewed and applied the scoped required-check update; `CI Pass` is now
+required on `main` with strict up-to-date checks, verified through the ruleset
+and effective branch rules. Final failed-prerequisite/recovery proof remains
+pending; admin bypass is emergency-only.
 
 Rust 1.91 minimum / 1.96.0 normal toolchain was explicitly approved after the
 original 1.88 declaration failed against the existing lockfile. CI uses a
@@ -89,8 +92,12 @@ lint, dependency policy, and scoped IaC validation. The
 [initial hosted CI run](https://github.com/kafkade/rook/actions/runs/38073209917)
 passed all seven jobs, including the Swift transport test, five native UI tests
 without skips, unsigned device compilation, and `CI Pass`. The scoped bootstrap
-apply is verified; PR-path proof, final check enforcement, and infrastructure
-version-control handoff remain outstanding.
+apply and required-check enforcement are verified. Code PR #2 also passed all
+seven jobs in run `38108441675` and merged as `17b6768`; host deployment metadata
+matched macOS 14 without the previous linker warning. Twenty-three local
+policy tests cover the aggregate, classification, native results, and host
+deployment checks. The infrastructure source is committed in private PR #2;
+its merge and final negative/recovery proof remain outstanding.
 
 No independent security audit, physical-device/VoiceOver verification,
 production signing, app-store delivery, biometric policy, or future sync

@@ -67,9 +67,10 @@ creation, initial Git push, and scoped OpenTofu applies are maintainer steps;
 provide exact commands and wait for confirmation at each manual gate.
 The directory move and license discussion are complete. Rust minimum 1.91 /
 pinned 1.96.0 is approved. `docs/ci.md` records the passing initial hosted
-main run on Xcode 26.6, and the verified PR/default-branch protections and
-Actions policy. PR-path validation and `CI Pass` enforcement remain manual
-bootstrap gates; do not claim the required gate is enabled yet.
+main and documentation/code PR runs on Xcode 26.6, and the verified branch
+protections and Actions policy. `CI Pass` is required on `main` with strict
+up-to-date checks. Final negative/recovery proof and infrastructure PR merge
+remain manual checkpoints; admin bypass is emergency-only.
 
 ## Product Constraints
 

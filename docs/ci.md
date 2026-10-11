@@ -1,9 +1,10 @@
 # Local and PR validation
 
-The public repository and initial hosted main run are verified. PR/default-branch
-protection and the SHA-pinned Actions allowlist are active; `CI Pass` is not yet
-a required check. The documentation-only PR path is verified; the code-affecting
-PR path still needs hosted proof before the final merge gate is enabled.
+The public repository, main-push workflow, and documentation/code PR paths are
+verified. PR/default-branch protection and the SHA-pinned Actions allowlist are
+active. `CI Pass` is required on `main`, with strict up-to-date checks.
+The final failed-prerequisite/recovery proof and infrastructure PR merge are
+still pending; required-check configuration alone is not that end-to-end proof.
 
 ## Verified bootstrap evidence
 
@@ -33,8 +34,14 @@ deployment metadata, not execution on macOS 14 hardware or the iOS 17 runtime.
 
 [Documentation PR #1](https://github.com/kafkade/rook/pull/1) passed with
 `code=false`, successful hygiene, four intentional code-job skips, and a
-successful aggregate. It was squash-merged as `d7bb1ac`; the full code PR and
-required gate enforcement remain pending.
+successful aggregate. It was squash-merged as `d7bb1ac`.
+
+[Code PR #2](https://github.com/kafkade/rook/pull/2) passed
+[run 38108441675](https://github.com/kafkade/rook/actions/runs/38108441675)
+with `code=true` and all seven jobs successful, then squash-merged as `17b6768`.
+Xcode 26.6 verified 1,787 host archive deployment records and the generation
+dylib at macOS 14 or earlier, with no newer-target linker warning. The Swift
+transport test, unsigned device build, and five native UI tests passed.
 
 ## Toolchain
 
@@ -104,7 +111,7 @@ do not establish hardware, VoiceOver, or independently audited security.
 
 ## Required check and skips
 
-`CI Pass` is the verified context intended for the final required gate.
+`CI Pass` is the active required context on `main`.
 Its prerequisites are Classify changes, Repository hygiene, Rust validation,
 Minimum Rust validation, Dependency policy, and Apple validation.
 
@@ -145,17 +152,26 @@ separate implementation/review; no unsupported badge or assurance is implied.
 
 ## Bootstrap protection
 
-The private `github-infra` project holds `repos/rook`, initially with no required
-CI context. It manages the public repository, `main`, squash/PR protection,
-labels, dependency alerts, and SHA-pinned allowed Actions.
-The bootstrap plan has been applied and its remote settings verified.
-No shared-module policy changes were needed.
+The private `github-infra` project holds `repos/rook`. It manages the public
+repository, `main`, squash/PR protection, labels, dependency alerts, and
+SHA-pinned allowed Actions. After the main and both PR paths passed, the
+maintainer reviewed and applied a saved plan containing exactly one in-place
+ruleset update for `required_status_checks = ["CI Pass"]`.
+The active ruleset and effective `main` branch rules both report the required
+context and strict up-to-date policy. No shared-module policy changes were needed.
 
-The main run proved the exact `CI Pass` context. After documentation-only and
-code-affecting PR runs prove the remaining workflow paths, the
-maintainer changes Rook's `required_status_checks` to `["CI Pass"]`, reviews a
-scoped plan, and applies it. A local test is not permission to enforce an
-unproven context. Admin bypass is break-glass, not the normal contribution path.
+The final negative/recovery check will deliberately open a documentation PR
+with an invalid title. Repository hygiene and `CI Pass` must fail; correcting
+the title must trigger the `edited` event and restore a passing aggregate
+without changing app code or bypassing the rule. Do not merge while checks fail.
+This hosted proof covers a failed prerequisite; cancellation and unexpected-skip
+cases also have unit coverage but are not independently staged as hosted failures.
+
+Admin bypass is break-glass, not the normal contribution path. The shared
+module requires the check name without a producer binding: GitHub Actions is
+the verified emitter, but the rule does not attest which workflow produced it.
+Do not introduce another job named `CI Pass`. The reviewed infrastructure
+definition is committed in the private repository's PR #2, awaiting merge.
 
 The selected provider does not expose private vulnerability reporting or
 default workflow token permissions. Those are explicit manual bootstrap
