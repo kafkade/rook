@@ -49,7 +49,7 @@ passed with Xcode 27. The
 [initial hosted CI run](https://github.com/kafkade/rook/actions/runs/38073209917)
 also passed with stable Xcode 26.6, including the Swift transport test, all five
 native UI tests, and unsigned device compilation. See `docs/ci.md` for the
-tested runtime and remaining PR-validation checkpoints.
+tested runtime, merge policy, and validation boundaries.
 
 Install missing prerequisites using their normal installers/package managers:
 
@@ -136,8 +136,10 @@ preserves decisions, [DESIGN.md](DESIGN.md) records the built native design syst
 and [AGENTS.md](AGENTS.md) defines contribution constraints.
 Repository settings are managed separately through `github-infra/repos/rook`,
 not by the local build. PR/default-branch protection and the SHA-pinned Actions
-allowlist are active. The `CI Pass` context passed on the initial main run;
-it will become required only after the remaining PR-validation checkpoints.
+allowlist are active. Main, documentation-only, and code-affecting workflows
+passed; `CI Pass` is now required on `main` with strict up-to-date checks.
+The failed-prerequisite/recovery proof is verified, the infrastructure definition
+is merged, and a final scoped plan reports no drift. Admin bypass is emergency-only.
 
 ## Contributing and license
 
