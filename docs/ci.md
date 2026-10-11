@@ -3,8 +3,8 @@
 The public repository, main-push workflow, and documentation/code PR paths are
 verified. PR/default-branch protection and the SHA-pinned Actions allowlist are
 active. `CI Pass` is required on `main`, with strict up-to-date checks.
-The final failed-prerequisite/recovery proof and infrastructure PR merge are
-still pending; required-check configuration alone is not that end-to-end proof.
+The failed-prerequisite/recovery proof and infrastructure PR merge are also
+verified. A final scoped OpenTofu plan reports no resource changes.
 
 ## Verified bootstrap evidence
 
@@ -42,6 +42,16 @@ with `code=true` and all seven jobs successful, then squash-merged as `17b6768`.
 Xcode 26.6 verified 1,787 host archive deployment records and the generation
 dylib at macOS 14 or earlier, with no newer-target linker warning. The Swift
 transport test, unsigned device build, and five native UI tests passed.
+
+[Enforcement PR #3](https://github.com/kafkade/rook/pull/3) proved failure and
+recovery on the same `573b0d6` commit. Its deliberately invalid title caused
+[run 38152143962](https://github.com/kafkade/rook/actions/runs/38152143962)
+to fail Repository hygiene and `CI Pass`; GitHub reported the PR as `BLOCKED`.
+Correcting only the title triggered
+[run 38152230683](https://github.com/kafkade/rook/actions/runs/38152230683),
+which passed and restored `CLEAN` merge readiness. No bypass or failing merge
+was attempted. This documentation records that evidence before the final
+source-PR merge.
 
 ## Toolchain
 
@@ -160,18 +170,21 @@ ruleset update for `required_status_checks = ["CI Pass"]`.
 The active ruleset and effective `main` branch rules both report the required
 context and strict up-to-date policy. No shared-module policy changes were needed.
 
-The final negative/recovery check will deliberately open a documentation PR
-with an invalid title. Repository hygiene and `CI Pass` must fail; correcting
-the title must trigger the `edited` event and restore a passing aggregate
-without changing app code or bypassing the rule. Do not merge while checks fail.
-This hosted proof covers a failed prerequisite; cancellation and unexpected-skip
-cases also have unit coverage but are not independently staged as hosted failures.
+The negative/recovery check described above proved that a failed title
+prerequisite fails the required aggregate and blocks normal merge readiness.
+The title-edit event restored success without changing app code or bypassing
+the rule. Do not merge while checks fail. This hosted proof covers a failed
+prerequisite; cancellation and unexpected-skip cases have unit coverage but
+were not independently staged as hosted failures.
 
 Admin bypass is break-glass, not the normal contribution path. The shared
 module requires the check name without a producer binding: GitHub Actions is
 the verified emitter, but the rule does not attest which workflow produced it.
 Do not introduce another job named `CI Pass`. The reviewed infrastructure
-definition is committed in the private repository's PR #2, awaiting merge.
+definition and proof are merged into the private repository's `main` at
+`0279313`. After synchronizing that checkout, the maintainer saved a final
+scoped plan; it reports no resource changes. State and saved plans remain
+ignored, not published alongside the source.
 
 The selected provider does not expose private vulnerability reporting or
 default workflow token permissions. Those are explicit manual bootstrap

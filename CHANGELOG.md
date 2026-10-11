@@ -16,6 +16,8 @@
   PR/default-branch protection, and a SHA-pinned Actions allowlist.
 - Required `CI Pass` merge check with strict up-to-date policy, enabled after
   successful main and documentation/code PR validation.
+- Verified failed-prerequisite/recovery behavior and merged infrastructure
+  definition, with a final scoped plan confirming no resource drift.
 
 ### Fixed
 
@@ -27,6 +29,3 @@
 - Prototype only; no independently audited security, physical-device or
   VoiceOver verification, signed distribution, Watch, HealthKit, or sync.
 - A SwiftUI invalid-frame runtime warning remains during keyboard editing.
-- Main and documentation/code PR validation passed and `CI Pass` is required;
-  the final failed-prerequisite/recovery proof and infrastructure merge remain
-  pending.

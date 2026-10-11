@@ -69,8 +69,9 @@ The directory move and license discussion are complete. Rust minimum 1.91 /
 pinned 1.96.0 is approved. `docs/ci.md` records the passing initial hosted
 main and documentation/code PR runs on Xcode 26.6, and the verified branch
 protections and Actions policy. `CI Pass` is required on `main` with strict
-up-to-date checks. Final negative/recovery proof and infrastructure PR merge
-remain manual checkpoints; admin bypass is emergency-only.
+up-to-date checks. Negative/recovery proof, the infrastructure PR merge, and
+the final scoped no-drift plan are verified. New changes must follow the checked
+PR path; admin bypass is emergency-only.
 
 ## Product Constraints
 
