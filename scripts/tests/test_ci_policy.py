@@ -192,5 +192,41 @@ class NativeResultTests(unittest.TestCase):
                 policy.check_native_summary(summary)
 
 
+class HostDeploymentTests(unittest.TestCase):
+    def record(self, minimum="14.0", platform="macos"):
+        return (
+            "Load command 1\n"
+            "       cmd LC_BUILD_VERSION\n"
+            "   cmdsize 24\n"
+            f"  platform {platform}\n"
+            "       sdk 27.0\n"
+            f"     minos {minimum}\n"
+            "    ntools 0\n"
+        )
+
+    def test_all_host_objects_and_dylib_match_the_package_floor(self):
+        headers = self.record("11.0") + self.record("14.0")
+        self.assertEqual(policy.check_host_deployment(headers), 2)
+        self.assertEqual(policy.check_host_deployment(self.record(platform="MACOS")), 1)
+
+    def test_any_sdk_default_above_floor_fails(self):
+        for version in ("14.0.1", "14.1", "26.5", "27.0"):
+            with self.subTest(version=version), self.assertRaises(ValueError):
+                policy.check_host_deployment(self.record("11.0") + self.record(version))
+
+    def test_missing_malformed_or_wrong_platform_cannot_pass(self):
+        for headers in (
+            "", "Archive: unreadable.a", self.record("n/a"),
+            self.record("14.0", "iossimulator"), self.record().replace("minos 14.0", ""),
+        ):
+            with self.subTest(headers=headers), self.assertRaises(ValueError):
+                policy.check_host_deployment(headers)
+
+    def test_legacy_macos_minimum_record(self):
+        self.assertEqual(policy.check_host_deployment(
+            "Load command 1\ncmd LC_VERSION_MIN_MACOSX\nversion 11.0\nsdk 14.0\n"
+        ), 1)
+
+
 if __name__ == "__main__":
     unittest.main()

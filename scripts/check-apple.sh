@@ -13,6 +13,10 @@ fi
 SIMULATOR="$(python3 scripts/simulator.py)"
 rustup target add aarch64-apple-ios-sim aarch64-apple-ios
 bash scripts/build-apple.sh all
+xcrun llvm-objdump --macho --private-headers target/apple-ffi/macos/librook_ffi.a \
+  | python3 scripts/ci-policy.py host-deployment
+xcrun vtool -show-build target/release/librook_ffi.dylib \
+  | python3 scripts/ci-policy.py host-deployment
 swift test --package-path apple/RookKit \
   --scratch-path "$ROOT/target/ci-swift" \
   -Xlinker -L -Xlinker "$ROOT/target/apple-ffi/macos" --quiet

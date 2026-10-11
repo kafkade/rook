@@ -15,10 +15,15 @@
 - Public source repository with verified private vulnerability reporting,
   PR/default-branch protection, and a SHA-pinned Actions allowlist.
 
+### Fixed
+
+- Align Rust and bundled native host dependencies with RookKit's macOS 14
+  deployment floor, with archive/dylib metadata checks before Swift linking.
+
 ### Known limitations
 
 - Prototype only; no independently audited security, physical-device or
   VoiceOver verification, signed distribution, Watch, HealthKit, or sync.
 - A SwiftUI invalid-frame runtime warning remains during keyboard editing.
-- The initial hosted main run passed; documentation-only/code PR-path proof and
-  required `CI Pass` enforcement remain pending.
+- The initial hosted main run and documentation-only PR passed; code-affecting
+  PR-path proof and required `CI Pass` enforcement remain pending.

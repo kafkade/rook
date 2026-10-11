@@ -62,6 +62,30 @@ def check_native_summary(summary):
         raise ValueError("The complete prototype UI suite did not pass without skips")
 
 
+def check_host_deployment(headers):
+    count = 0
+    for command in headers.split("Load command"):
+        if re.search(r"\bcmd LC_BUILD_VERSION\b", command):
+            platform = re.search(r"^\s*platform (\S+)\s*$", command, re.MULTILINE)
+            minimum = re.search(r"^\s*minos (\S+)\s*$", command, re.MULTILINE)
+            if platform is None or platform[1].lower() != "macos":
+                raise ValueError("Host archive contains a non-macOS or missing platform")
+        elif re.search(r"\bcmd LC_VERSION_MIN_MACOSX\b", command):
+            minimum = re.search(r"^\s*version (\S+)\s*$", command, re.MULTILINE)
+        else:
+            continue
+        if minimum is None or not re.fullmatch(r"\d+(\.\d+){0,2}", minimum[1]):
+            raise ValueError("Host object has invalid deployment metadata")
+        version = tuple(int(part) for part in minimum[1].split("."))
+        version += (0,) * (3 - len(version))
+        if version > (14, 0, 0):
+            raise ValueError(f"Host object requires macOS {minimum[1]}, above RookKit's macOS 14 floor")
+        count += 1
+    if count == 0:
+        raise ValueError("Host deployment metadata is missing; compatibility was not checked")
+    return count
+
+
 def classify(event, base, head):
     if event != "pull_request":
         return True
@@ -100,7 +124,9 @@ def check_files():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("classify", "gate", "title", "files", "native-result"))
+    parser.add_argument(
+        "command", choices=("classify", "gate", "title", "files", "native-result", "host-deployment")
+    )
     args = parser.parse_args()
     if args.command == "classify":
         code = classify(os.environ["EVENT_NAME"], os.environ.get("BASE_SHA", ""), os.environ.get("HEAD_SHA", ""))
@@ -118,6 +144,9 @@ def main():
         summary = json.load(sys.stdin)
         check_native_summary(summary)
         print(f"Native suite passed: {summary['passedTests']} tests without skips")
+    elif args.command == "host-deployment":
+        count = check_host_deployment(sys.stdin.read())
+        print(f"Host deployment verified: {count} Mach-O records require macOS 14 or earlier")
     else:
         check_files()
 
