@@ -19,7 +19,7 @@ uuid = { version = "1", features = ["v4"] }
 chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
 zeroize = "1"
 age = "0.12.1"
-rusqlite = { version = "0.40.2", default-features = false, features = ["bundled-sqlcipher-vendored-openssl"] }
+rusqlite = { version = "0.41.1", default-features = false, features = ["bundled-sqlcipher-vendored-openssl"] }
 uniffi = "0.32.2"
 tempfile = "3"
 
